@@ -1,3 +1,10 @@
+# User-defined
+pickles/*
+client_secret.json
+preferences.json
+config.json
+cache/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
