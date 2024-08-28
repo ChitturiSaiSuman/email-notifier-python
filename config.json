@@ -1,0 +1,17 @@
+{
+    "accounts": [
+        {
+            "name": "User Name",
+            "email": "username@example.com",
+            "sleep": 5,
+            "pickle": "example.pickle"
+        }
+    ],
+    "default_time_delta": {
+        "days": 0,
+        "weeks": 1,
+        "months": 0
+    },
+    "setup.log": "logs/setup.log",
+    "run.log": "logs/run.log"
+}
