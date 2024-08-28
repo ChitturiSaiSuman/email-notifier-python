@@ -1,0 +1,8 @@
+{
+    "username@example.com": {
+        "watch": [],
+        "ignore": [],
+        "sound": "assets/sound.wav",
+        "icon": "assets/icon.png"
+    }
+}
