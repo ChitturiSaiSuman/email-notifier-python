@@ -1,7 +1,7 @@
 import logging
 import time
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
+from datetime import datetime, timedelta
 from traceback import format_exc
 
 from googleapiclient.discovery import build
@@ -44,7 +44,7 @@ class EmailNotifier:
                 last_checked = Account_Manager.get_last_checked(account)
 
                 unread_emails = client.get_unread_emails(last_checked)
-                last_checked = datetime.now()
+                last_checked = datetime.now() - timedelta(seconds=1)
 
                 unread_emails = self.apply_preferences(unread_emails, preferences)
 
@@ -56,6 +56,7 @@ class EmailNotifier:
                 Account_Manager.set_last_checked(account, last_checked)
 
             except RefreshError:
+                logging.error(f"Error in account {account.email}: {format_exc()}")
                 creds = Authenticator.verify_creds(account)
                 service = build("gmail", "v1", credentials=creds)
                 client = Client(service)
