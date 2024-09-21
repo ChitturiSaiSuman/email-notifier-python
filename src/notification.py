@@ -19,7 +19,9 @@ class Notification:
         self.notifier.application_name = application_name
         self.notifier.urgency = urgency
         self.notifier.icon = path_to_icon
-        self.notifier.audio = path_to_audio
+
+        if path_to_audio:
+            self.notifier.audio = path_to_audio
 
     def notify(self):
         self.notifier.send()
