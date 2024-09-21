@@ -1,5 +1,5 @@
-import time
-import webbrowser
+import logging
+import os
 from threading import Lock
 
 from src.account import Account
@@ -14,18 +14,22 @@ class Notification_Handler:
 
         with Notification_Handler._lock:
 
-            args = {
-                "title": f"{len(unread_emails)} new emails",
-                "message": "\n".join([email["subject"] for email in unread_emails[:5]]),
-                "application_name": account.email,
-                "urgency": "normal",
-                "path_to_icon": preferences.get("icon"),
-                "path_to_audio": preferences.get("sound"),
-                "enable_logging": False,
-            }
+            sound_path = preferences.get("sound")
+            os.system(f'paplay "{sound_path}"')
 
-            notification = Notification(**args)
-            notification.notify()
+            for mail in unread_emails:
+                args = {
+                    "title": f"You've got an Email from {mail['from']}",
+                    "message": mail["subject"],
+                    "application_name": account.email,
+                    "urgency": "normal",
+                    "path_to_icon": preferences.get("icon"),
+                    "path_to_audio": None,
+                    "enable_logging": False,
+                }
 
-            webbrowser.open(unread_emails[0]["link"])
-            time.sleep(5)
+                logging.info(f"Sending notification for {account.email} ...")
+                logging.info(f"Mail: {mail}")
+
+                notification = Notification(**args)
+                notification.notify()
